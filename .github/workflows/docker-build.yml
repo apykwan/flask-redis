@@ -39,6 +39,8 @@ jobs:
       -
         name: Build and push
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME}} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+      -
         run: docker buildx ls
+      -
         run: docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 -t apkwan/flask-redis:latest .
           
