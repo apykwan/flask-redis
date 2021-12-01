@@ -3,14 +3,33 @@ on: [push]
 jobs:
   Docker-Build-Push: 
     runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: docker image build
-        run: docker build -t apkwan/flask-redis:latest .
-      - name: list docker image
-        run: docker image ls
-      - name: dockerhub log in
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME}} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: push to docker hub
-        run: docker push apkwan/flask-redis:latest
+    # steps:
+    #   - name: Check out repository code
+    #     uses: actions/checkout@v2
+    #   # - name: docker image build
+    #   #   run: docker build -t apkwan/flask-redis:latest .
+    #   # - name: list docker image
+    #   #   run: docker image ls
+    #   - name: dockerhub log in
+    #     run: docker login -u ${{ secrets.DOCKERHUB_USERNAME}} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+    #   # - name: push to docker hub
+    #   #   run: docker push apkwan/flask-redis:latest
+    #   - name: buildx image
+    #     run: /
+    #       docker buildx create --name mybuilder --use
+    #       docker buildx ls
+    #       docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 -t apkwan/flask-redis:latest .
+      steps:
+        -
+          name: Checkout
+          uses: actions/checkout@v2
+        -
+          name: Set up QEMU
+          uses: docker/setup-qemu-action@v1
+        -
+          name: Set up Docker Buildx
+          id: buildx
+          uses: docker/setup-buildx-action@v1
+        -
+          name: Available platforms
+          run: echo ${{ steps.buildx.outputs.platforms }}
