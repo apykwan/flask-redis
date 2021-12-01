@@ -7,7 +7,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: docker image build
-        run: docker build -t apykwan/flask-redis:latest .
+        run: docker build -t apkwan/flask-redis:latest .
       - name: list docker image
         run: docker image ls
       - name: dockerhub log in
